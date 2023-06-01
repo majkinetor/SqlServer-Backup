@@ -1,5 +1,8 @@
 # SQL Server Backup Script
 
+[![](https://img.shields.io/badge/version-1.0-green)](https://github.com/majkinetor/SqlServer-Backup)
+
+
 This script provides a way to backup the MS SQL Server database with subsequent restoration. The script is hosted on the server which hosts the restored database and accesses the remote database via SMB share. The script runs continuously and executes backup strategy defined in the config file.
 
 ## Setup
