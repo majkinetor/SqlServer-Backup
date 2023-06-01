@@ -1,0 +1,24 @@
+
+# https://serverfault.com/questions/135867/how-to-grant-network-access-to-localsystem-account
+function New-BackupShare ([string]$SharePath) {
+    New-Item -ItemType Directory $SharePath -ErrorAction ignore | Out-Null
+
+    $dirName = Split-Path $SharePath -Leaf
+    $params = @{
+        Name        = $dirName
+        Path        = Resolve-Path $SharePath
+        FullAccess  = 'Authenticated Users'
+        EncryptData = $true
+    }
+    Remove-BackupShare $SharePath
+    New-SmbShare @params | Out-Null
+
+    #ip = Test-Connection -ComputerName $Env:COMPUTERNAME -Count 1 -IPv4 | % Address | % IPAddressToString
+    $sharePath = "\\$Env:COMPUTERNAME\$dirName"
+    $sharePath
+}
+
+function Remove-BackupShare( $SharePath ) {
+    $dirName = Split-Path $SharePath -Leaf
+    Remove-SmbShare -Name $dirName -Force -ErrorAction ignore
+}
