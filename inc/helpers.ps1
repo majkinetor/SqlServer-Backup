@@ -17,7 +17,11 @@ function New-Backup( [string] $Type )
     $backupDirPath  = $Cfg.Paths.RemotePath
     $backupFileName = "$(Get-Date -Format 'yyyy-MM-ddTHH_mm_ss') $($Cfg.Source.Database)"
     
-    $params = @{ BackupAction = 'Database'; Verbose = $true }
+    $params = @{
+        BackupAction      = 'Database'
+        Verbose           = $true
+        CompressionOption = 'On'
+    }
     switch ($Type) 
     {
         'Full' { $backupFileName += '.full' }
